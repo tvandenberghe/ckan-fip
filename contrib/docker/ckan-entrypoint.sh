@@ -36,6 +36,7 @@ set_environment () {
   export CKAN_SMTP_PASSWORD=${CKAN_SMTP_PASSWORD}
   export CKAN_SMTP_MAIL_FROM=${CKAN_SMTP_MAIL_FROM}
   export CKAN_MAX_UPLOAD_SIZE_MB=${CKAN_MAX_UPLOAD_SIZE_MB}
+  export CKAN_ADMIN_USER=${CKAN_ADMIN_USER}
 }
 
 write_config () {
@@ -73,4 +74,5 @@ if [ ! -e "$CKAN_CONFIG/who.ini" ]; then
 fi
 
 ckan-paster --plugin=ckan db init -c "${CKAN_CONFIG}/production.ini"
+ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add $CKAN_ADMIN_USER
 exec "$@"
