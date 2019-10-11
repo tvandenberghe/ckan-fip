@@ -16,7 +16,7 @@ RUN apt-get -q -y update \
         libgeos-dev \
         libssl-dev \
         libffi-dev \
-        postgresql-client \
+        postgresql-client-9.4 \
         build-essential \
         git-core \
         vim \

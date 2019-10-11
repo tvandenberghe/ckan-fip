@@ -19,6 +19,8 @@ abort () {
 }
 
 set_environment () {
+  export CKAN_HOME=${CKAN_HOME}
+  export CKAN_CONFIG=${CKAN_CONFIG}
   export CKAN_SITE_ID=${CKAN_SITE_ID}
   export CKAN_SITE_URL=${CKAN_SITE_URL}
   export CKAN_SQLALCHEMY_URL=${CKAN_SQLALCHEMY_URL}
@@ -63,5 +65,12 @@ if [ -z "$CKAN_DATAPUSHER_URL" ]; then
 fi
 
 set_environment
+
+# If we don't already have a who.ini symlink create it
+if [ ! -e "$CKAN_CONFIG/who.ini" ]; then
+  echo "WARNING: move who.ini again."
+      cp --remove-destination $CKAN_HOME/venv/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
+fi
+
 ckan-paster --plugin=ckan db init -c "${CKAN_CONFIG}/production.ini"
 exec "$@"
