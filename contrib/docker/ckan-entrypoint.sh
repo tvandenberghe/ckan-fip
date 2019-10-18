@@ -71,7 +71,11 @@ set_environment
 if [ ! -e "$CKAN_CONFIG/who.ini" ]; then
   echo "WARNING: move who.ini again."
       cp --remove-destination $CKAN_HOME/venv/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
+
 fi
+
+cd "${CKAN_HOME}/venv/src/ckan/ckanext/ckanext-gbif"
+ckan-pip install -e .
 
 ckan-paster --plugin=ckan db init -c "${CKAN_CONFIG}/production.ini"
 ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add $CKAN_ADMIN_USER
