@@ -44,4 +44,4 @@ ckan_deb/DEBIAN/prerm
 node_modules/
 
 # docker
-contrib/docker/.env
+#contrib/docker/.env
