@@ -48,10 +48,10 @@ RUN mkdir -p $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH && \
 #    ckan-pip install -e $CKAN_VENV/src/ckan/ && \
 #    python $CKAN_VENV/src/ckan/ckanext/ckanext-gbif/setup.py develop && \
 #    pip install -e $CKAN_VENV/src/ckan/ckanext/ckanext-gbif/setup.py && \
+RUN ckan-pip install -U pip
 ADD . $CKAN_VENV/src/ckan/
-RUN ckan-pip install -U pip && \
-    ckan-pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirement-setuptools.txt && \
-    ckan-pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirements.txt && \
+RUN ckan-pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirement-setuptools.txt
+RUN ckan-pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirements.txt && \
     ckan-pip install -e $CKAN_VENV/src/ckan/ && \
     #python $CKAN_VENV/src/ckan/ckanext/ckanext-gbif/setup.py develop && \
     ckan-pip install -e $CKAN_VENV/src/ckan/ckanext/ckanext-gbif && \
@@ -59,6 +59,8 @@ RUN ckan-pip install -U pip && \
     cp -v $CKAN_VENV/src/ckan/contrib/docker/ckan-entrypoint.sh /ckan-entrypoint.sh && \
     chmod +x /ckan-entrypoint.sh && \
     chown -R ckan:ckan $CKAN_HOME $CKAN_VENV $CKAN_CONFIG $CKAN_STORAGE_PATH
+#RUN pip install -e "git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-spatial" && \
+#    pip install -r /src/ckanext-spatial/pip-requirements.txt
 
 ENTRYPOINT ["/ckan-entrypoint.sh"]
 

@@ -1,7 +1,7 @@
 GBIF contactType,actually used,GBIF contactType def,CKAN contactType,new contactType
-ADMINISTRATIVE_POINT_OF_CONTACT,x,A contact to contact for further non-technical information related to the dataset.,x,pointOfContact
+ADMINISTRATIVE_POINT_OF_CONTACT,x,A contact to contact for further non-technical information related to the dataset.,x,
 AUTHOR,,"A contact who is an author of a publication that used the dataset, or author of a data paper.",author,
-CONTENT_PROVIDER,,A contact who contributed content to a dataset (the dataset being described may be a composite).,,coAuthor
+CONTENT_PROVIDER,,A contact who contributed content to a dataset (the dataset being described may be a composite).,,
 METADATA_AUTHOR,x,A contact responsible for providing the metadata.,,metadataAuthor
 ORIGINATOR,x,A contact who originally gathered/prepared the dataset.,,originator
 OWNER,,A contact who owns the dataset (may or may not be the custodian).,owner,

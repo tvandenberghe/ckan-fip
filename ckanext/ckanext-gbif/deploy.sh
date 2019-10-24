@@ -5,8 +5,12 @@
 
 #echo "reloaded pip"
 cd  ../../contrib/docker 
-sudo docker-compose build && sudo docker-compose up -d && sudo docker logs -f ckan
+#sudo docker  kill redis solr datapusher && sudo docker system prune -a && sudo docker-compose build && sudo docker-compose up -d && \
 #sudo docker-compose up -d && sudo docker logs -f ckan
 #sudo docker exec -it ckan /bin/bash -c 'ckan-paster serve --reload /etc/ckan/production.ini'
+sudo docker-compose build && sudo docker-compose up -d && \
 cd -
-python ../../../gbif2ckan/gbif2ckan.py
+sleep 30s
+python3 ../../../gbif2ckan/gbif2ckan.py
+echo "reran gbif2ckan"
+sudo docker logs -f ckan

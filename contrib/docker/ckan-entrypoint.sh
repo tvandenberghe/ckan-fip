@@ -77,6 +77,9 @@ fi
 cd "${CKAN_HOME}/venv/src/ckan/ckanext/ckanext-gbif"
 ckan-pip install -e .
 
+ckan-pip install -e "git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-spatial" && \
+ckan-pip install -r $CKAN_HOME/venv/src/ckanext-spatial/pip-requirements.txt
+
 ckan-paster --plugin=ckan db init -c "${CKAN_CONFIG}/production.ini"
 ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add $CKAN_ADMIN_USER
 exec "$@"

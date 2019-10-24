@@ -1,25 +1,5 @@
 {% ckan_extends %}
 
 {% block extras %}
-{% if pkg_dict.custom_text %}
-<tr>
-  <th scope="row" class="dataset-label">{{ _("GBIF fields") }}</th>
-  <td class="dataset-details">{{ pkg_dict.gbif_uuid }}</td>
-  <td class="dataset-details">{{ pkg_dict.dwca_url }}</td>
-  <td class="dataset-details">{{ pkg_dict.administrative_contact }}</td>
-  <td class="dataset-details">{{ pkg_dict.administrative_contact_full }}</td>
-  <td class="dataset-details">{{ pkg_dict.custom_text }}</td>
-  <td class="dataset-details">{{ pkg_dict.custom_text }}</td>
-
-       schema= self.create_md_element(schema, 'gbif_uuid')
-       schema = self.create_md_element(schema, 'dwca_url')
-       schema = self.create_md_element(schema, 'administrative_contact')
-       schema = self.create_md_element(schema, 'administrative_contact_name')
-       schema = self.create_md_element(schema, 'administrative_contact_name')
-       schema = self.create_md_element(schema, 'metadata_contact')
-       schema = self.create_md_element(schema, 'metadata_contact_full')
-       schema = self.create_md_element(schema, 'originator')
-       schema = self.create_md_element(schema, 'originator_full')
-</tr>
-{% endif %}
+  
 {% endblock %}

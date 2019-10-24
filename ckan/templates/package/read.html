@@ -3,46 +3,276 @@
 {% set pkg = c.pkg_dict %}
 
 {% block primary_content_inner %}
-  {{ super() }}
-  {% block package_description %}
-    {% if pkg.private %}
-      <span class="dataset-private label label-inverse pull-right">
+{{ super() }}
+{% block package_description %}
+{% if pkg.private %}
+<span class="dataset-private label label-inverse pull-right">
         <i class="fa fa-lock"></i>
         {{ _('Private') }}
       </span>
+{% endif %}
+<h1>
+  {% block page_heading %}
+  {{ h.dataset_display_name(pkg) }}
+  {% if pkg.state.startswith('draft') %}
+  [{{ _('Draft') }}]
+  {% endif %}
+  {% if pkg.state == 'deleted' %}
+  [{{ _('Deleted') }}]
+  {% endif %}
+  {% endblock %}
+</h1>
+{% block package_notes %}
+{% if pkg.notes %}
+<div class="notes embedded-content">
+  {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
+</div>
+{% endif %}
+{% endblock %}
+{# FIXME why is this here? seems wrong #}
+<span class="insert-comment-thread"></span>
+{% endblock %}
+
+<h3>{{ _('Keywords') }}</h3>
+{% block package_tags %}
+{% snippet "package/snippets/tags.html", tags=pkg.tags %}
+{% endblock %}
+
+<h3>{{ _('Identifiers') }}</h3>
+<table class="table table-striped table-bordered table-condensed">
+  <tbody>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("CKAN identifier") }}</th>
+    <td class="dataset-details">{{ pkg.id }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("GBIF identifier") }}</th>
+    <td class="dataset-details">{{ pkg.id }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("IPT identifier") }}</th>
+    <td class="dataset-details">{{ pkg.name }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("DOI from the IPT") }}</th>
+    <td class="dataset-details">{{ pkg.doi }}</td>
+  </tr>
+    <tr>
+    <th scope="row" class="dataset-label">{{ _("DOI from GBIF") }}</th>
+    <td class="dataset-details">{{ pkg.doi_gbif }}</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>{{ _('Maintenance') }}</h3>
+<table class="table table-striped table-bordered table-condensed">
+  <tbody>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Creation date") }}</th>
+    <td class="dataset-details">
+      {{ pkg.eml_created }}
+    </td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Modification date") }}</th>
+    <td class="dataset-details">
+      {{ pkg.eml_modified }}
+    </td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Last harvested by CKAN") }}</th>
+    <td class="dataset-details">
+      {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=pkg.metadata_modified %}
+    </td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Maintenance frequency") }}</th>
+    <td class="dataset-details">{{ pkg.maintenance_frequency }}</td>
+  </tr>
+
+          <tr>
+            <th scope="row" class="dataset-label">{{ _("Version") }}</th>
+            <td class="dataset-details">{{ pkg.version }}</td>
+          </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _('Source') }}</th>
+    {% if h.is_url(pkg.url) %}
+    <td class="dataset-details" property="foaf:homepage">{{ h.link_to(pkg.url, pkg.url, rel='foaf:homepage',
+      target='_blank') }}
+    </td>
+    {% else %}
+    <td class="dataset-details" property="foaf:homepage">{{ pkg.url }}</td>
     {% endif %}
-    <h1>
-      {% block page_heading %}
-        {{ h.dataset_display_name(pkg) }}
-        {% if pkg.state.startswith('draft') %}
-          [{{ _('Draft') }}]
-        {% endif %}
-        {% if pkg.state == 'deleted' %}
-          [{{ _('Deleted') }}]
-        {% endif %}
-      {% endblock %}
-    </h1>
-    {% block package_notes %}
-      {% if pkg.notes %}
-        <div class="notes embedded-content">
-          {{ h.render_markdown(h.get_translated(pkg, 'notes')) }}
-        </div>
-      {% endif %}
-    {% endblock %}
-    {# FIXME why is this here? seems wrong #}
-    <span class="insert-comment-thread"></span>
-  {% endblock %}
+  </tr>
+  </tbody>
+</table>
 
-  {% block package_resources %}
-    {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
-  {% endblock %}
+<h3>{{ _('Temporal extent') }}</h3>
 
-  {% block package_tags %}
-    {% snippet "package/snippets/tags.html", tags=pkg.tags %}
-  {% endblock %}
+<table class="table table-striped table-bordered table-condensed">
+  <tbody>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Start date") }}</th>
+    <td class="dataset-details">
+      {{ pkg.start_datetime }}
+    </td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("End date") }}</th>
+    <td class="dataset-details">
+      {{ pkg.end_datetime }}
+    </td>
+  </tr>
+  </tbody>
+</table>
 
-  {% block package_additional_info %}
-    {% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
-  {% endblock %}
+<h3>{{ _('Spatial extent') }}</h3>
+{% set dataset_extent = h.get_pkg_dict_extra(pkg, 'spatial', '') %}
 
+<table class="table table-striped table-bordered table-condensed">
+  <tbody>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Location description") }}</th>
+    <td class="dataset-details">
+      {{ pkg.geo_desc }}
+    </td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Dataset extent") }}</th>
+    <td class="dataset-details">
+      {{ dataset_extent }}
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+
+{% if dataset_extent %}
+{% snippet "spatial/snippets/dataset_map_sidebar.html", extent=dataset_extent %}
+{% endif %}
+<h4>{{ _('Occurrences map') }}</h4>
+<div id="fordataset_map" data-module="bbpf_dataset_provides_map" data-module-datasetkey="{{ pkg.id }}"
+     style="width: 458px; height: 300px;"></div>
+<script type="text/javascript">
+
+      var datasetKey = '{{ pkg.id }}';
+      var lat = 0;
+      var lon = 0;
+      var zoom = 1;
+
+      // Add map
+      var map = L.map('fordataset_map').setView([lat, lon], zoom);
+
+      // Add background
+      var OpenStreetMap_BlackAndWhite = L.tileLayer('http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      }).addTo(map);
+
+      // Add data layer
+      L.tileLayer('http://api.gbif.org/v1/map/density/tile?x={x}&y={y}&z={z}&type=DATASET&resolution=4&key=' + datasetKey, {}).addTo(map);
+
+      // Get data layer bounds
+
+      // That's an undocumented GBIF API, hopefully it continues working!
+      var boundsUrl = "http://cdn.gbif.org/v1/map/density/tile.json?key=" + datasetKey + "&resolution=1&x=0&y=0&z=0&type=DATASET"
+      jQuery.get(boundsUrl, function(data){
+        map.fitBounds([
+            [data.maximumLatitude, data.minimumLongitude],
+            [data.minimumLatitude, data.maximumLongitude]
+        ])
+      });
+      // Hhmmm sometimes the bounds are at this point slightly off... Decrease one zoom level.
+      map.zoomOut();
+
+
+
+
+</script>
+
+{% block package_resources %}
+{% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
+{% endblock %}
+
+<h3>{{ _('Contacts') }}</h3>
+
+<table class="table table-striped table-bordered table-condensed">
+  <tbody>
+  {% if pkg.author_email %}
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Author") }}</th>
+    <td class="dataset-details" property="dc:creator">{{ h.mail_to(email_address=pkg.author_email, name=pkg.author) }}
+    </td>
+  </tr>
+  {% elif pkg.author %}
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Author") }}</th>
+    <td class="dataset-details" property="dc:creator">{{ pkg.author }}</td>
+  </tr>
+  {% endif %}
+
+  {% if pkg.maintainer_email %}
+  <tr>
+    <th scope="row" class="dataset-label">{{ _('Maintainer') }}</th>
+    <td class="dataset-details" property="dc:contributor">{{ h.mail_to(email_address=pkg.maintainer_email,
+      name=pkg.maintainer) }}
+    </td>
+  </tr>
+  {% elif pkg.maintainer %}
+  <tr>
+    <th scope="row" class="dataset-label">{{ _('Maintainer') }}</th>
+    <td class="dataset-details" property="dc:contributor">{{ pkg.maintainer }}</td>
+  </tr>
+  {% endif %}
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Administrative contact") }}</th>
+    <td class="dataset-details">{{ pkg.administrative_contact_full }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Administrative contact") }}</th>
+    <td class="dataset-details">{{ pkg.administrative_contact_name }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Metadata contact") }}</th>
+    <td class="dataset-details">{{ pkg.metadata_contact_full }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Metadata contact") }}</th>
+    <td class="dataset-details">{{ pkg.metadata_contact_name }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Originator") }}</th>
+    <td class="dataset-details">{{ pkg.originator_full }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Originator") }}</th>
+    <td class="dataset-details">{{ pkg.originator_name }}</td>
+  </tr>
+  </tbody>
+</table>
+
+<h3>{{ _('Processing and Lineage') }}</h3>
+
+<table class="table table-striped table-bordered table-condensed">
+  <tbody>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Study extent") }}</th>
+    <td class="dataset-details">{{ pkg.study_extent }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Quality control") }}</th>
+    <td class="dataset-details">{{ pkg.quality_control }}</td>
+  </tr>
+  <tr>
+    <th scope="row" class="dataset-label">{{ _("Method steps") }}</th>
+    <td class="dataset-details">{{ pkg.method_steps }}</td>
+  </tr>
+  </tbody>
+</table>
+
+{#
+{% block package_additional_info %}
+{% snippet "package/snippets/additional_info.html", pkg_dict=pkg %}
+{% endblock %}
+#}
 {% endblock %}
