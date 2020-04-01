@@ -67,6 +67,7 @@ class IGBIFPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
         schema = self.create_md_element(schema, 'study_extent', type)
         schema = self.create_md_element(schema, 'quality_control', type)
         schema = self.create_md_element(schema, 'method_steps', type)
+      #  schema = self.create_md_element(schema, 'taxonomic_coverage', type)
         return schema
 
     def show_package_schema(self):
