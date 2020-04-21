@@ -6,7 +6,7 @@
 #create database ckan owner postgres;
 
 #At the first run docker needs to be interactive in order to create some users, so sudo docker-compose up. 
-#Later it's easier to use udo docker-compose up -d
+#Later it's easier to use sudo docker-compose up -d
 
 # /bin/bash
 #sudo cp -r ../ckanext-gbif /var/lib/docker/volumes/docker_ckan_home/_data/venv/src/ckan/ckanext/
@@ -18,7 +18,7 @@ cd  ../../contrib/docker
 #sudo docker  kill redis solr datapusher && sudo docker system prune -a && sudo docker-compose build && sudo docker-compose up -d && \
 #sudo docker-compose up -d && sudo docker logs -f ckan
 #sudo docker exec -it ckan /bin/bash -c 'ckan-paster serve --reload /etc/ckan/production.ini'
-sudo docker-compose build && sudo docker-compose up -d && \
+sudo docker-compose build && sudo docker-compose up && \
 cd -
 sleep 30s
 python3 ../../../gbif2ckan/gbif2ckan.py
