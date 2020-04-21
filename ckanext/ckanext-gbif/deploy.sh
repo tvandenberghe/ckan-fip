@@ -18,7 +18,7 @@ cd  ../../contrib/docker
 #sudo docker  kill redis solr datapusher && sudo docker system prune -a && sudo docker-compose build && sudo docker-compose up -d && \
 #sudo docker-compose up -d && sudo docker logs -f ckan
 #sudo docker exec -it ckan /bin/bash -c 'ckan-paster serve --reload /etc/ckan/production.ini'
-sudo docker-compose build && sudo docker-compose up -d && \
+sudo docker-compose build && sudo docker-compose up && \
 cd -
 sleep 30s
 python3 ../../../gbif2ckan/gbif2ckan.py
