@@ -1,3 +1,13 @@
+
+#script to activate the CKAN GBIF-enabled website 
+
+#in the target database server, first create the  database anfd user
+#create user ckan with password '';
+#create database ckan owner postgres;
+
+#At the first run docker needs to be interactive in order to create some users, so sudo docker-compose up. 
+#Later it's easier to use udo docker-compose up -d
+
 # /bin/bash
 #sudo cp -r ../ckanext-gbif /var/lib/docker/volumes/docker_ckan_home/_data/venv/src/ckan/ckanext/
 #echo "copied files"
