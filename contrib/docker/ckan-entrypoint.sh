@@ -81,8 +81,8 @@ ckan-pip install -e "git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext
 ckan-pip install -r $CKAN_HOME/venv/src/ckanext-spatial/pip-requirements.txt
 
 ckan-paster --plugin=ckan db init -c "${CKAN_CONFIG}/production.ini"
-#ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add $CKAN_ADMIN_USER #this is nice but causes problems. beter to create the user manually
+# ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add $CKAN_ADMIN_USER #this is nice but causes problems. beter to create the user manually
 
-docker exec -it ckan /usr/local/bin/ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add johndoe
+# docker exec -it ckan /usr/local/bin/ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add johndoe
 
 exec "$@"
