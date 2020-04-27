@@ -5,9 +5,6 @@
 #create user ckan with password '';
 #create database ckan owner postgres;
 
-#At the first run docker needs to be interactive in order to create some users, so sudo docker-compose up. 
-#Later it's easier to use sudo docker-compose up -d
-
 # /bin/bash
 #sudo cp -r ../ckanext-gbif /var/lib/docker/volumes/docker_ckan_home/_data/venv/src/ckan/ckanext/
 #echo "copied files"
@@ -23,4 +20,7 @@ cd -
 sleep 30s
 python3 ../../../gbif2ckan/gbif2ckan.py
 echo "reran gbif2ckan"
+echo "ckan docker container logs"
 sudo docker logs -f ckan
+
+#run sudo docker exec -it ckan /usr/local/bin/ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add adminuser 

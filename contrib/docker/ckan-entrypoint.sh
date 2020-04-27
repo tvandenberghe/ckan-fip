@@ -73,16 +73,21 @@ if [ ! -e "$CKAN_CONFIG/who.ini" ]; then
       cp --remove-destination $CKAN_HOME/venv/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini
 
 fi
-
+echo 'installing ckanext-gbif'
 cd "${CKAN_HOME}/venv/src/ckan/ckanext/ckanext-gbif"
 ckan-pip install -e .
 
+echo 'installing ckanext-spatial'
 ckan-pip install -e "git+https://github.com/ckan/ckanext-spatial.git#egg=ckanext-spatial" && \
 ckan-pip install -r $CKAN_HOME/venv/src/ckanext-spatial/pip-requirements.txt
 
-ckan-paster --plugin=ckan db init -c "${CKAN_CONFIG}/production.ini"
-# ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add $CKAN_ADMIN_USER #this is nice but causes problems. beter to create the user manually
+echo 'installing ckanext-pages'
+ckan-pip install -e 'git+https://github.com/ckan/ckanext-pages.git#egg=ckanext-pages'
 
-# docker exec -it ckan /usr/local/bin/ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add johndoe
+# sed -r 's/ckan.plugins = (.*?)/ckan.plugins = \1 pages/g' "${CKAN_CONFIG}/production.ini" > "${CKAN_CONFIG}/production.ini"
+
+ckan-paster --plugin=ckan db init -c "${CKAN_CONFIG}/production.ini"
+# ckan-paster --plugin=ckan sysadmin -c /etc/ckan/production.ini add $CKAN_ADMIN_USER #this is nice but causes problems with the docker stdin. beter to create the user manually
+
 
 exec "$@"
