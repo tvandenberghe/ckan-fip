@@ -1,9 +1,11 @@
 
 #script to activate the CKAN GBIF-enabled website 
 
-#in the target database server, first create the  database anfd user
+#in the target database server, first create the  database anf user
 #create user ckan with password '';
 #create database ckan owner postgres;
+#psql -d ckan then
+#CREATE EXTENSION postgis;
 
 # /bin/bash
 #sudo cp -r ../ckanext-gbif /var/lib/docker/volumes/docker_ckan_home/_data/venv/src/ckan/ckanext/

@@ -53,7 +53,7 @@ ADD . $CKAN_VENV/src/ckan/
 RUN ckan-pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirement-setuptools.txt
 RUN ckan-pip install --upgrade --no-cache-dir -r $CKAN_VENV/src/ckan/requirements.txt && \
     ckan-pip install -e $CKAN_VENV/src/ckan/ && \
-    ckan-pip install -e $CKAN_VENV/src/ckan/ckanext/ckanext-gbif && \
+#    ckan-pip install -e $CKAN_VENV/src/ckan/ckanext/ckanext-gbif && \
     ln -s $CKAN_VENV/src/ckan/ckan/config/who.ini $CKAN_CONFIG/who.ini && \
     cp -v $CKAN_VENV/src/ckan/contrib/docker/ckan-entrypoint.sh /ckan-entrypoint.sh && \
     chmod +x /ckan-entrypoint.sh && \
