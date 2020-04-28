@@ -62,12 +62,14 @@ class IGBIFPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
         schema = self.create_md_element(schema, 'start_datetime', type)
         schema = self.create_md_element(schema, 'end_datetime', type)
         schema = self.create_md_element(schema, 'geo_desc', type)
+        schema = self.create_md_element(schema, 'taxonomic_coverage', type)
+        schema = self.create_md_element(schema, 'actual_taxa', type)
+        schema = self.create_md_element(schema, 'occurrences', type)
         schema = self.create_md_element(schema, 'doi', type)
         schema = self.create_md_element(schema, 'doi_gbif', type)
         schema = self.create_md_element(schema, 'study_extent', type)
         schema = self.create_md_element(schema, 'quality_control', type)
         schema = self.create_md_element(schema, 'method_steps', type)
-      #  schema = self.create_md_element(schema, 'taxonomic_coverage', type)
         return schema
 
     def show_package_schema(self):

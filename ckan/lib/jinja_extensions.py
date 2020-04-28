@@ -3,6 +3,7 @@
 import re
 from os import path
 import logging
+import json
 
 from jinja2 import nodes
 from jinja2 import loaders
@@ -39,6 +40,9 @@ def get_jinja_env_options():
 
 
 ### Filters
+
+def from_json(string):
+    return json.loads(string)
 
 def empty_and_escape(value):
     ''' returns '' for a None value else escapes the content useful for form
