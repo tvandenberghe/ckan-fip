@@ -1,0 +1,28 @@
+{% set intro = g.site_intro_text %}
+
+<div class="module-content box">
+  <header>
+    {% if intro %}
+      {{ h.render_markdown(intro) }}
+    {% else %}
+      <h1 class="page-heading">{{ _("Welcome to the freshwater biodiversity portal CKAN instance") }}</h1>
+      <p>
+        {% trans %}This website provides an overview of the datasets of <a href="https://www.gbif.org/network/d1627240-04ab-4162-aee9-b16df6bc8308">The Freshwater Network</a>. This GBIF network has been established in the framework of the BioFresh project, and further developed under the Freshwater Information Platform (FIP).
+        The website shows most of the datasets of the <a href="http://data.freshwaterbiodiversity.eu/">Freshwater Biodiversity Data Portal</a> and as such further promotes freshwater biodiversity data publishing and increases the visibility of such data. It's based on CKAN, an open source data portal web application that can be ported to any context. The datasets are directly harvested from GBIF.
+        {% endtrans %}
+      </p>
+    {% endif %}
+  </header>
+{#
+  {% block home_image %}
+    <section class="featured media-overlay hidden-xs">
+      <h2 class="media-heading">{% block home_image_caption %}{{ _("This is a featured section") }}{% endblock %}</h2>
+      {% block home_image_content %}
+        <a class="media-image" href="#">
+          <img class="img-responsive" src="{{ h.url_for_static('/base/images/placeholder-420x220.png') }}" alt="Placeholder" width="420" height="220" />
+        </a>
+      {% endblock %}
+    </section>
+  {% endblock %}
+  #}
+</div>

@@ -19,7 +19,8 @@ cd  ../../contrib/docker
 #sudo docker exec -it ckan /bin/bash -c 'ckan-paster serve --reload /etc/ckan/production.ini'
 sudo docker-compose build && sudo docker-compose up -d && \
 cd -
-sleep 30s
+echo "created docker container"
+sleep 40s
 python3 ../../../gbif2ckan/gbif2ckan.py
 echo "reran gbif2ckan"
 echo "ckan docker container logs"

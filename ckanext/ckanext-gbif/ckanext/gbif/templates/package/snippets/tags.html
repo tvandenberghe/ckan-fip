@@ -1,0 +1,5 @@
+{% if pkg.tags or pkg.gcmd_keywords or pkg.gcmd_iso_topics or pkg.gbif_dataset_type or pkg.gbif_dataset_subtype%}
+  <section class="tags">
+    {% snippet 'snippets/tag_list.html', pkg=pkg, _class='tag-list well' %}
+  </section>
+{% endif %}

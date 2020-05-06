@@ -44,6 +44,9 @@ def get_jinja_env_options():
 def from_json(string):
     return json.loads(string)
 
+def print_object(object):
+    return json.dumps(object)
+
 def empty_and_escape(value):
     ''' returns '' for a None value else escapes the content useful for form
     elements. '''

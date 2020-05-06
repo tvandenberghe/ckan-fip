@@ -187,6 +187,7 @@ class TagSearchQuery(SearchQuery):
             'offset': options.get('offset'),
             'limit': options.get('limit')
         }
+        print(query)
         results = logic.get_action('tag_search')(context, data_dict)
 
         if not options.return_objects:

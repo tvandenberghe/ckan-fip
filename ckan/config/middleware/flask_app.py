@@ -132,7 +132,6 @@ def make_flask_stack(conf, **app_conf):
     app.jinja_env.filters['empty_and_escape'] = \
         jinja_extensions.empty_and_escape
 
-    app.jinja_env.filters['from_json'] = jinja_extensions.from_json
     # Common handlers for all requests
     app.before_request(ckan_before_request)
     app.after_request(ckan_after_request)

@@ -1,0 +1,86 @@
+{#
+Render a list of tags linking to the dataset search page
+
+tags - list of tag dicts
+
+Example:
+
+{% snippet 'snippets/tag_list.html', tags=tags, _class='tag-list well' %}
+
+
+#}
+{% set _class = _class or 'tag-list' %}
+{% block tag_list %}
+<ul class="{{ _class }}">
+  {% if pkg.gcmd_keywords%}
+  <h4>{{ _('GCMD Keywords') }}</h4>
+  {% for tag in pkg.gcmd_keywords %}
+  <li>
+    <ul>
+      <li>
+        <a class="{% block tag_list_item_class1 %}tag{% endblock %}"
+           href="/dataset?q={{ tag }}">{{
+          h.truncate(tag, 22) }}</a>
+      </li>
+    </ul>
+  </li>
+  {% endfor %}
+  {% endif %}
+  {% if pkg.gcmd_iso_topics%}
+  <h4>{{ _('GCMD ISO Topics') }}</h4>
+  {% for tag in pkg.gcmd_iso_topics %}
+  <li>
+    <ul>
+      <li>
+        <a class="{% block tag_list_item_class2 %}tag{% endblock %}"
+           href="/dataset?q={{ tag }}">{{
+          h.truncate(tag, 22) }}</a>
+      </li>
+    </ul>
+  </li>
+  {% endfor %}
+  {% endif %}
+  {% if pkg.gbif_dataset_type%}
+  <h4>{{ _('GBIF dataset types') }}</h4>
+  {% for tag in pkg.gbif_dataset_type %}
+  <li>
+    <ul>
+      <li>
+        <a class="{% block tag_list_item_class3 %}tag{% endblock %}"
+           href="/dataset?q={{ tag }}">{{
+          h.truncate(tag, 22) }}</a>
+      </li>
+    </ul>
+  </li>
+  {% endfor %}
+  {% endif %}
+  {% if pkg.gbif_dataset_subtype%}
+  <h4>{{ _('GBIF dataset subtypes') }}</h4>
+  {% for tag in pkg.gbif_dataset_subtype %}
+  <li>
+    <ul>
+      <li>
+        <a class="{% block tag_list_item_class4 %}tag{% endblock %}"
+           href="/dataset?q={{ tag }}">{{
+          h.truncate(tag, 22) }}</a>
+      </li>
+    </ul>
+  </li>
+  {% endfor %}
+  {% endif %}
+  {% if pkg.tags%}
+  <h4>{{ _('Loose tags') }}</h4>
+  {% for tag in pkg.tags %}
+  <li>
+    <ul>
+      <li>
+        <a class="{% block tag_list_item_class5 %}tag{% endblock %}"
+           href="/dataset?tags={{ tag.name }}">{{
+          h.truncate(tag.display_name, 22) }}</a>
+      </li>
+    </ul>
+  </li>
+  {% endfor %}
+  {% endif %}
+</ul>
+{% endblock %}

@@ -280,6 +280,7 @@ def update_config():
     # custom filters
     env.filters['empty_and_escape'] = jinja_extensions.empty_and_escape
     env.filters['from_json'] = jinja_extensions.from_json
+    env.filters['print_object'] = jinja_extensions.print_object
     config['pylons.app_globals'].jinja_env = env
 
     # CONFIGURATION OPTIONS HERE (note: all config options will override
