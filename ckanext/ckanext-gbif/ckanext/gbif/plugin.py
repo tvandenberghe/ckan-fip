@@ -106,8 +106,7 @@ class IGBIFPlugin(p.SingletonPlugin, tk.DefaultDatasetForm):
         schema = super(IGBIFPlugin, self).show_package_schema()
         self._modify_package_schema(schema, 'SHOW')
 
-        #schema['tags']['__extras'].append(tk.get_converter('free_tags_only')) #irrelevant as all non-free tags are taken up as other variables
-        #since the tags are a bit of a mess it's best not to show where they actually come from. So disable to hide vocabbed tags.
+        schema['tags']['__extras'].append(tk.get_converter('free_tags_only'))
 
         return schema
 
